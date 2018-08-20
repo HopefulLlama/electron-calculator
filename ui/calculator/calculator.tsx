@@ -6,8 +6,6 @@ import ArbitraryButton from './arbitrary-button';
 import NumericButton from './numeric-button';
 import OperandButton from './operand-button';
 import EquationElement from './equation-element';
-import doFirst from '../util/do-first';
-import Task from '../util/task';
 interface State {
   elements: EquationElement[]
 };
@@ -46,12 +44,14 @@ export default class extends React.Component<{}, State> {
 
   get display(): string {
     return this.state.elements.reduce((display, element, index) => {
-      return doFirst([
-        new Task(() => element.isNumber(), text => `${text}${element.text}`),
-        new Task(() => element.text === '-' && this.state.elements[index - 1].isOperand(), text => `${text} ${element.text}`),
-        new Task(() => true, text => `${text} ${element.text} `)
-      ], display);
-    }, '')
+      if(element.isNumber()) {
+        return `${display}${element.text}`;
+      } else if(element.text === '-' && this.state.elements[index - 1].isOperand()) {
+        return `${display} ${element.text}`;
+      } else {
+        return `${display} ${element.text} `
+      }
+    }, '');
   }
 
   addNumber(text: string): void {
@@ -68,14 +68,12 @@ export default class extends React.Component<{}, State> {
   }
 
   addOperand(text: string): void {
-    const element = doFirst([
-      new Task(() => this.lastElementIs(element => element.isNumber()), () => new EquationElement('operand', text)),
-      new Task(() => text === '-' && this.lastElementIs(element => element.isOperand() && element.text !== '-'), () => new EquationElement('number', text))
-    ], null)
-
-    if(element !== null) {
-      this.state.elements.push(element);
+    if(this.lastElementIs(element => element.isNumber())) {
+      this.state.elements.push(new EquationElement('operand', text));
+    } else if(text === '-' && this.lastElementIs(element => element.isOperand() && element.text !== '-')) {
+      this.state.elements.push(new EquationElement('number', text));
     }
+
     this.setState(this.state);
   }
 

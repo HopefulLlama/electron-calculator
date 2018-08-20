@@ -1,7 +1,8 @@
 import * as React from 'react';
 
 interface Props {
-  value: string
+  value: string,
+  onClick: Function
 };
 
 export default class extends React.Component<Props, {}> {
@@ -11,7 +12,7 @@ export default class extends React.Component<Props, {}> {
 
   render() {
     return (
-      <button className="button is-primary is-outlined is-fullwidth">{this.props.value}</button>
+      <button className="button is-primary is-outlined is-fullwidth" onClick={() => this.props.onClick()}>{this.props.value}</button>
     );
   }
 }

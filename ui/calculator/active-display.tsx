@@ -1,22 +1,19 @@
 import * as React from 'react';
 
-interface State {
+interface Props {
   display: string
 };
 
-export default class extends React.Component<{}, State> {
-  constructor(props: object, state: State) {
+export default class extends React.Component<Props, {}> {
+  constructor(props: Props, state: {}) {
     super(props, state);
-    this.state = {
-      display: ''
-    };
   }
 
   render() {
     return (
       <div className="field">
         <div className="control">
-          <input className="input is-primary is-rounded has-text-right" type="text" disabled value = {this.state.display || ''} />
+          <input className="input is-primary is-rounded has-text-right" type="text" disabled value = {this.props.display || ''} />
         </div>
       </div>
     );

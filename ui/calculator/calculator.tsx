@@ -18,15 +18,17 @@ export default class extends React.Component<{}, State> {
     this.state = {
       elements: []
     };
+  }
 
-    this.addNumber.bind(this);
-    this.addOperand.bind(this);
+  reset() {
+    this.setState({
+      elements: []
+    });
   }
 
   get lastElement(): EquationElement {
     return this.state.elements[this.state.elements.length - 1];
   }
-
 
   lastElementIs(test: (equation: EquationElement) => boolean): boolean {
     return this.lastElement !== undefined && test(this.lastElement);
@@ -77,10 +79,10 @@ export default class extends React.Component<{}, State> {
           <div className="column"></div>
 
           <div className="column">
-            <ArbitraryButton text="C" />
+            <ArbitraryButton text="C" onClick={() => {}} />
           </div>
           <div className="column">
-            <ArbitraryButton text="AC" />
+            <ArbitraryButton text="AC" onClick={() => this.reset()} />
           </div>
         </div>
 
@@ -137,7 +139,7 @@ export default class extends React.Component<{}, State> {
             <NumericButton value="." onClick={() => this.addNumber(".")} />
           </div>
           <div className="column">
-            <ArbitraryButton text="=" />
+            <ArbitraryButton text="=" onClick={() => {}} />
           </div>
           <div className="column">
             <OperandButton text="+" onClick={() => this.addOperand("+")}/>

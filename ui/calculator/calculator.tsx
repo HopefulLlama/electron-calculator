@@ -79,6 +79,8 @@ export default class extends React.Component<{}, State> {
       // do nothing
     } else if(emptyList || lastElementIsOperand) {
       this.state.elements.push(new EquationElement('number', text));
+    } else if(lastElementIsNumber && this.lastElementIs(element => element.text === '0')) {
+      this.lastElement.text = text;
     } else {
       this.lastElement.text = `${this.lastElement.text}${text}`;
     }

@@ -49,7 +49,7 @@ export default class extends React.Component<{}, State> {
       } else if(element.text === '-' && this.state.elements[index - 1].isOperand()) {
         return `${display} ${element.text}`;
       } else {
-        return `${display} ${element.text} `
+        return `${display} ${element.text} `;
       }
     }, '');
   }
@@ -70,7 +70,7 @@ export default class extends React.Component<{}, State> {
   addOperand(text: string): void {
     if(this.lastElementIs(element => element.isNumber())) {
       this.state.elements.push(new EquationElement('operand', text));
-    } else if(text === '-' && this.lastElementIs(element => element.isOperand() && element.text !== '-')) {
+    } else if(text === '-' && this.lastElementIs(element => element.isOperand())) {
       this.state.elements.push(new EquationElement('number', text));
     }
 

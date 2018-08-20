@@ -26,6 +26,16 @@ export default class extends React.Component<{}, State> {
     });
   }
 
+  clearLast() {
+    if(this.lastElementIs(element => element.text.length > 1)) {
+      this.lastElement.text = this.lastElement.text.slice(0, - 1);
+    } else {
+      this.state.elements.pop();
+    }
+
+    this.setState(this.state);
+  }
+
   get lastElement(): EquationElement {
     return this.state.elements[this.state.elements.length - 1];
   }
@@ -79,7 +89,7 @@ export default class extends React.Component<{}, State> {
           <div className="column"></div>
 
           <div className="column">
-            <ArbitraryButton text="C" onClick={() => {}} />
+            <ArbitraryButton text="C" onClick={() => this.clearLast()} />
           </div>
           <div className="column">
             <ArbitraryButton text="AC" onClick={() => this.reset()} />

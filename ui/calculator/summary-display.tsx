@@ -1,20 +1,17 @@
 import * as React from 'react';
 
-interface State {
+interface Props {
   display: string
 };
 
-export default class extends React.Component<{}, State> {
-  constructor(props: object, state: State) {
+export default class extends React.Component<Props, {}> {
+  constructor(props: Props, state: object) {
     super(props, state);
-    this.state = {
-      display: ''
-    };
   }
 
   render() {
     return (
-      <h1>{this.state.display || ''}</h1>
+      <h1 className="has-text-right">{this.props.display}</h1>
     );
   }
 }

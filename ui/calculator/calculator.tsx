@@ -6,7 +6,9 @@ import ArbitraryButton from './arbitrary-button';
 import NumericButton from './numeric-button';
 import OperandButton from './operand-button';
 import EquationElement from './equation-element';
+import calculate from './calculate';
 interface State {
+  summary: string,
   elements: EquationElement[]
 };
 
@@ -14,12 +16,14 @@ export default class extends React.Component<{}, State> {
   constructor(props: object, state: object) {
     super(props, state);
     this.state = {
+      summary: '',
       elements: []
     };
   }
 
   reset() {
     this.setState({
+      summary: '',
       elements: []
     });
   }
@@ -32,6 +36,13 @@ export default class extends React.Component<{}, State> {
     }
 
     this.setState(this.state);
+  }
+
+  calculate() {
+    const summary = this.display;
+    const elements = [calculate(this.state.elements)];
+
+    this.setState({summary, elements});
   }
 
   get lastElement(): EquationElement {
@@ -88,7 +99,7 @@ export default class extends React.Component<{}, State> {
   render() {
     return (
       <div className="container">
-        <SummaryDisplay />
+        <SummaryDisplay display={this.state.summary} />
         <ActiveDisplay display={this.display} />
         <div className="columns">
           <div className="column"></div>
@@ -155,7 +166,7 @@ export default class extends React.Component<{}, State> {
             <NumericButton value="." onClick={() => this.addNumber(".")} />
           </div>
           <div className="column">
-            <ArbitraryButton text="=" onClick={() => {}} />
+            <ArbitraryButton text="=" onClick={() => this.calculate()} />
           </div>
           <div className="column">
             <OperandButton text="+" onClick={() => this.addOperand("+")}/>

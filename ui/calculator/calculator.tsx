@@ -56,9 +56,17 @@ export default class extends React.Component<{}, State> {
 
   addNumber(text: string): void {
     const emptyList = this.state.elements.length === 0;
-    const lastElementIsOperand = this.lastElementIs(lastElement => lastElement.isOperand());
+    const lastElementIsOperand = this.lastElementIs(element => element.isOperand());
 
-    if(emptyList || lastElementIsOperand) {
+    const isDot = text === '.';
+    const lastElementIsNumber = this.lastElementIs(element => element.isNumber());
+    const lastElementContainsDot = this.lastElementIs(element => element.text.indexOf('.') > -1);
+
+    const dotIsNotValid = ((lastElementIsNumber && lastElementContainsDot) || lastElementIsOperand || emptyList);
+
+    if(isDot && dotIsNotValid) {
+      // do nothing
+    } else if(emptyList || lastElementIsOperand) {
       this.state.elements.push(new EquationElement('number', text));
     } else {
       this.lastElement.text = `${this.lastElement.text}${text}`;

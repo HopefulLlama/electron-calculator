@@ -8,10 +8,11 @@
     "preprocess": "node scripts/copy-files.js && tslint -c tslint.json 'app/**/*.ts' && webpack && sass sass/css.scss app/dist/ui.css",
     "run": "electron app/app.js",
     "start": "npm run preprocess && npm run run",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "e2e-test": "npm run preprocess && jasmine \"./spec/e2e/**/*Spec.js\"",
+    "test": "npm run e2e-test"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {},
   "devDependencies": {
     "@types/react": "^16.4.11",
@@ -19,9 +20,11 @@
     "bulma": "^0.7.1",
     "electron": "^2.0.7",
     "electron-packager": "^12.1.1",
+    "jasmine": "^3.2.0",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
     "sass": "^1.12.0",
+    "spectron": "^4.0.0",
     "ts-loader": "^4.4.2",
     "tslint": "^5.11.0",
     "typescript": "^3.0.1",

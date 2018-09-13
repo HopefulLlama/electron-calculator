@@ -12,7 +12,7 @@ export default class extends React.Component<Props, {}> {
 
   render() {
     return (
-      <button className="button is-primary is-fullwidth" onClick={() => this.props.onClick()}>{this.props.text}</button>
+      <button className="button operand-button is-primary is-fullwidth" onClick={() => this.props.onClick()}>{this.props.text}</button>
     );
   }
 }

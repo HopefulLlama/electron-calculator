@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 const Application = require('./Application');
+const CustomCommands = require('./CustomCommands');
 
 let app;
 
@@ -12,7 +13,9 @@ const arbitraryButtons = ['=', 'C', 'AC'];
 describe('UISpec', () => {
   beforeEach(() => {
     app = Application.createApp();
-    return app.start();
+    return app
+      .start()
+      .then(() => CustomCommands(app.client));
   });
 
   afterEach(() => {
@@ -24,9 +27,7 @@ describe('UISpec', () => {
   });
 
   it('should take a picture', () => app.browserWindow.capturePage()
-    .then(imageBuffer => {
-      fs.writeFileSync(path.join('spec', 'e2e', 'ui.png'), imageBuffer);
-    })
+    .then(imageBuffer => fs.writeFileSync(path.join('spec', 'e2e', 'ui.png'), imageBuffer))
   );
 
   it('should have the right buttons', () => app.client.getText('.button')

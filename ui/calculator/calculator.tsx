@@ -17,14 +17,14 @@ export default class extends React.Component<{}, State> {
     super(props, state);
     this.state = {
       summary: '',
-      elements: []
+      elements: [new EquationElement('number', '0')]
     };
   }
 
   reset() {
     this.setState({
       summary: '',
-      elements: []
+      elements: [new EquationElement('number', '0')]
     });
   }
 
@@ -79,7 +79,7 @@ export default class extends React.Component<{}, State> {
       // do nothing
     } else if(emptyList || lastElementIsOperand) {
       this.state.elements.push(new EquationElement('number', text));
-    } else if(lastElementIsNumber && this.lastElementIs(element => element.text === '0')) {
+    } else if(lastElementIsNumber && this.lastElementIs(element => element.text === '0') && !isDot) {
       this.lastElement.text = text;
     } else {
       this.lastElement.text = `${this.lastElement.text}${text}`;

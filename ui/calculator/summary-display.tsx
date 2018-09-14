@@ -11,7 +11,7 @@ export default class extends React.Component<Props, {}> {
 
   render() {
     return (
-      <h1 className="has-text-right">{this.props.display}</h1>
+      <h1 id="summary-display" className="has-text-right">{this.props.display}</h1>
     );
   }
 }

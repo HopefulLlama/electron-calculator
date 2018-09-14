@@ -13,7 +13,7 @@ export default class extends React.Component<Props, {}> {
     return (
       <div className="field">
         <div className="control">
-          <input className="input is-primary is-rounded has-text-right" type="text" disabled value = {this.props.display || ''} />
+          <input id="active-display" className="input is-primary is-rounded has-text-right" type="text" value = {this.props.display || ''} />
         </div>
       </div>
     );

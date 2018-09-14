@@ -1,11 +1,14 @@
 const Application = require('./Application');
+const CustomCommands = require('./CustomCommands');
 
 let app;
 
 describe('SmokeSpec', () => {
   beforeEach(() => {
     app = Application.createApp();
-    return app.start();
+    return app
+      .start()
+      .then(() => CustomCommands(app.client));
   });
 
   afterEach(() => {

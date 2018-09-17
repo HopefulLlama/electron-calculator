@@ -74,6 +74,20 @@ describe('InteractionSpec', () => {
     );
   });
 
+  describe('decimal points', () => {
+    it('should allow for a single decimal point', () => app.client.clickButton('.')
+      .then(() => app.client.expectDisplayToBe('0.'))
+    );
+
+    it('should not allow for multiple decimal points', () => app.client.clickButtons(['.', '.', '.'])
+      .then(() => app.client.expectDisplayToBe('0.'))
+    );
+
+    it('should not allow for decimal point immediately after operand', () => app.client.clickButtons(['+', '.', '.'])
+      .then(() => app.client.expectDisplayToBe('0 + '))
+    );
+  });
+
   describe('should calculate after pressing', () => {
     it('"12 × 10 =', () => app.client.clickButtons([1, 2, '×', 1, 0, '='])
       .then(() => app.client.expectDisplayToBe(120))

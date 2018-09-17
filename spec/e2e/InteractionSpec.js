@@ -114,4 +114,46 @@ describe('InteractionSpec', () => {
       .then(() => app.client.expectSummaryToBe('12.25 + 10.3'))
     );
   });
+
+  describe('C', () => {
+    it('should revert to 0 after deleting last number', () => app.client.clickButton(1)
+      .then(() => app.client.expectDisplayToBe(1))
+      .then(() => app.client.clickButton('C'))
+      .then(() => app.client.expectDisplayToBe(0))
+    );
+
+    it('should delete last number of multi-character number', () => app.client.clickButtons([1, 2, 3])
+      .then(() => app.client.expectDisplayToBe(123))
+      .then(() => app.client.clickButton('C'))
+      .then(() => app.client.expectDisplayToBe(12))
+    );
+
+    it('should revert to 0 after deleting last number of multi-character number', () => app.client.clickButtons([1, 2, 3])
+      .then(() => app.client.expectDisplayToBe(123))
+      .then(() => app.client.clickButtons(['C', 'C', 'C']))
+      .then(() => app.client.expectDisplayToBe(0))
+    );
+
+    it('should delete the operand', () => app.client.clickButtons([1, '+'])
+      .then(() => app.client.expectDisplayToBe('1 + '))
+      .then(() => app.client.clickButton('C'))
+      .then(() => app.client.expectDisplayToBe(1))
+    );
+  });
+
+  describe('AC', () => {
+    it('should revert to zero', () => app.client.clickButtons([1, 2, 3, '+', 1, 2, 3, 4])
+      .then(() => app.client.expectDisplayToBe('123 + 1234'))
+      .then(() => app.client.clickButton('AC'))
+      .then(() => app.client.expectDisplayToBe(0))
+      .then(() => app.client.expectSummaryToBe(''))
+    );
+
+    it('should revert the summary to empty', () => app.client.clickButtons([1, 2, 3, '+', 1, 2, 3, 4, '='])
+      .then(() => app.client.expectDisplayToBe(1357))
+      .then(() => app.client.clickButton('AC'))
+      .then(() => app.client.expectDisplayToBe(0))
+      .then(() => app.client.expectSummaryToBe(''))
+    );
+  });
 });

@@ -35,6 +35,10 @@ export default class extends React.Component<{}, State> {
       this.state.elements.pop();
     }
 
+    if(this.state.elements.length === 0) {
+      this.state.elements.push(new EquationElement('number', '0'));
+    }
+
     this.setState(this.state);
   }
 
